@@ -1,21 +1,46 @@
 pipeline {
     agent {docker {image 'maven:3.9.5-amazoncorretto-8-debian-bookworm'}}
     stages{
+		stage('Example Username/Password') {
+            environment {
+				dockerHome = tool 'myDocker'
+				mavenHome = tool 'myMaven'
+				PATH = '$dockerHome/bin:$mavenHome/bin:$PATH'
+            }
+            steps {
+                sh 'echo "Docker home is $dockerHome"'
+                sh 'echo "Maven Home is $mavenHome"'
+            }
+        }
 			stage('Build'){
 				steps{
 				    sh 'echo $PATH'
 					sh 'mvn --version'
-					echo 'Build'
+					echo '-*-*--*-*--*-*-Build Info-*-*--*-*--*-*-'
+					echo 'BUILD - $env.BUILD_ID'
+					echo 'BUILD Number - $env.BUILD_NUMBER'
+					echo 'JAVA_HOME - $env.JAVA_HOME'
+					echo 'JOB_NAME - $env.JOB_NAME'
+				}
+			}
+			stage('clean'){
+				steps{
+					sh 'mvn clean'
+				}
+			}
+			stage('Compile'){
+				steps{
+					sh 'mvn compile'
 				}
 			}
 			stage('Test'){
 				steps{
-					echo 'Test'
+					sh 'mvn test'
 				}
 			}
-			stage('Deploy'){
+			stage('Integration Test'){
 				steps{
-					echo 'Deploy'
+					sh 'mvn failsafe:integration-test failsafe:verify'
 				}
 			}
 		}
