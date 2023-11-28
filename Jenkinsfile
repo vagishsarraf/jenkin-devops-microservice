@@ -1,13 +1,9 @@
 pipeline {
-    agent {docker {image 'node:lts-slim'}}
-	tools { 
-      maven 'MAVEN_HOME' 
-      jdk 'JAVA_HOME' 
-    }
-
+    agent {docker {image 'maven:3.9.5-amazoncorretto-8-debian-bookworm'}}
     stages{
 			stage('Build'){
 				steps{
+				    sh 'echo $PATH'
 					sh 'mvn --version'
 					echo 'Build'
 				}
