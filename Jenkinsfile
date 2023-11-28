@@ -10,6 +10,7 @@ pipeline {
 					echo 'BUILD Number - $env.BUILD_NUMBER'
 					echo 'JAVA_HOME - $env.JAVA_HOME'
 					echo 'JOB_NAME - $env.JOB_NAME'
+					echo '-*-*--*-*--*-*-Build Info-*-*--*-*--*-*-'
 				}
 			}
 			stage('clean'){
@@ -46,13 +47,9 @@ pipeline {
 			}
 			stage('Push Docker Image'){
 				steps{
-					script{
-					dockerImage.withRegistry('','dockerhub' ){
-						dockerImage.push('latest')
-				}
-					}
-			}
+					sh "docker push vagishsarrafib/dockerlearning:'$env.BUILD_ID'"
 		}
+	}
 	}
 		post {
 			always {
