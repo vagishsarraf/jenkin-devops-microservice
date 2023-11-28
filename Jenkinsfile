@@ -1,5 +1,9 @@
 pipeline {
     agent {docker {image 'node:lts-slim'}}
+	tools { 
+      maven 'MAVEN_HOME' 
+      jdk 'JAVA_HOME' 
+    }
 
     stages{
 			stage('Build'){
