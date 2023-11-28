@@ -53,6 +53,7 @@ pipeline {
 					}
 			}
 		}
+	}
 		post {
 			always {
 				echo 'I am always'
