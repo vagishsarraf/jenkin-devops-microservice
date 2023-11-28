@@ -47,7 +47,9 @@ pipeline {
 			}
 			stage('Push Docker Image'){
 				steps{
-					withDockerRegistry(credentialsId: 'Dockerhub_pass', toolName: 'docker', url: 'hub.docker.com')
+					withDockerRegistry(credentialsId: 'Dockerhub_pass', url: 'hub.docker.com'){
+						dockerImage.push('latest');
+					}
 		}
 	}}
 		post {
