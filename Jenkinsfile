@@ -47,10 +47,9 @@ pipeline {
 			}
 			stage('Push Docker Image'){
 				steps{
-					sh "docker push vagishsarrafib/dockerlearning:'$env.BUILD_ID'"
+					withDockerRegistry(credentialsId: 'Dockerhub_pass', toolName: 'docker', url: 'hub.docker.com')
 		}
-	}
-	}
+	}}
 		post {
 			always {
 				echo 'I am always'
