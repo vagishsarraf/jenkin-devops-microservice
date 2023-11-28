@@ -1,5 +1,5 @@
 pipeline {
-    agent {docker {image 'maven:3.9.5-amazoncorretto-8-debian-bookworm'}}
+    agent any
     stages{
 			stage('Build'){
 				steps{
