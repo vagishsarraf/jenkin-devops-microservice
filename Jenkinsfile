@@ -32,6 +32,25 @@ pipeline {
 					sh 'mvn failsafe:integration-test failsafe:verify'
 				}
 			}
+			stage('Package'){
+				steps{
+					sh "mvn package -DskipTest"
+				}
+			}
+			stage('Build Docker Image'){
+				steps{
+					script{
+						dockerImage = docker.Build("vagishsarrafib/dockerlearning:$env.BUILD_ID")
+					}
+				}
+			}
+			stage('Push Docker Image'){
+				steps{
+					dockerImage.withRegistry('', ){
+						dockerImage.push('latest')
+					}
+				}
+			}
 		}
 		post {
 			always {
