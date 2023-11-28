@@ -1,17 +1,6 @@
 pipeline {
     agent {docker {image 'maven:3.9.5-amazoncorretto-8-debian-bookworm'}}
     stages{
-		stage('Example Username/Password') {
-            environment {
-				dockerHome = tool 'myDocker'
-				mavenHome = tool 'myMaven'
-				PATH = '$dockerHome/bin:$mavenHome/bin:$PATH'
-            }
-            steps {
-                sh 'echo "Docker home is $dockerHome"'
-                sh 'echo "Maven Home is $mavenHome"'
-            }
-        }
 			stage('Build'){
 				steps{
 				    sh 'echo $PATH'
